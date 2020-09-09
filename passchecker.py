@@ -18,3 +18,13 @@ def pass_input(password):
     hashes = req_api_data(first5chars)
     count = check_count(hashes, tail)
     return count
+
+@app.route('/passcheck', methods=['POST', 'GET'])
+def pass_check():
+    if request.method == 'POST':
+        password = request.form['password']
+    count = pass_input(password)
+    if count:
+        return render_template("passwordchecker.html", msg1 = f'The Password has been hacked {count} times!')
+    else:
+        return render_template("passwordchecker.html", msg2 = 'The Password is Safe to Use.') 
